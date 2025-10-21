@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,4 +43,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function posts(): HasMany
+    {
+        // 'user_id' foreign key'inin Post modelinde varsayılan olarak bulunduğunu varsayar
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Kullanıcının yaptığı tüm yorumları döndürür.
+     * İlişki: Bire Çok (One-to-Many)
+     */
+    public function comments(): HasMany
+    {
+        // 'user_id' foreign key'inin Comment modelinde varsayılan olarak bulunduğunu varsayar
+        return $this->hasMany(Comment::class);
+    }
 }
