@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front.posts.index');
 });
 
 Route::get('/dashboard', function () {
@@ -32,7 +32,15 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/showPosts', [PostController::class, 'showPosts'])->name('show.posts');
+Route::get('/showMyPosts', [PostController::class, 'showMyPosts'])->name('show.my.posts');
+
 route::get('/post/create', [PostController::class, 'createPost'])->name('post.create');
 route::post('/addPost', [PostController::class, 'addPost'])->name('post.add');
+
+
+route::delete('/deletePost/{id}', [PostController::class, 'deletePost'])->name('post.delete');
+
+route::post('/editPost/{id}', [PostController::class, 'editPost'])->name('post.edit');
+route::post('/showEditPage/{id}', [PostController::class, 'showEditPage'])->name('show.edit.page');
 
 

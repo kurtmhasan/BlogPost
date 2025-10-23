@@ -139,7 +139,7 @@
                 </li>
                 <li class="menu-item">
                     <a
-                        href=""
+                        href="{{ route('show.my.posts') }}"
                         target="_self"
                         class="menu-link">
                         <i class="menu-icon tf-icons bx bx-envelope"></i>

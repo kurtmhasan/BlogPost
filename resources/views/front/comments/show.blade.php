@@ -1,0 +1,1 @@
+kişinin yorumları görüntüleme
