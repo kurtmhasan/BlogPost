@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Yabancı Anahtar: Hangi kullanıcıya ait?
-            $table->string('title', 255);
+            $table->unsignedBigInteger('user_id');
             $table->text('content');
-            $table->string('slug')->unique(); // SEO dostu URL'ler için
             $table->timestamps();
+            $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
+
         });
     }
 

@@ -1,15 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
     use HasFactory;
-    protected $guarded = []; // Basitlik için tüm alanları toplu atamaya açar
-
+    protected $table = 'posts';
     // Post, bir kullanıcıya aittir.
     public function user(): BelongsTo
     {
