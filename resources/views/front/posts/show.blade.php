@@ -23,7 +23,7 @@
                         @if(!empty($posts))
                             @foreach($posts as $post)
                                 <div class="card mb-10">
-                                    <p class="fw-bold fs-5 m-5">Paylaşan: {{ $post->user->name}}</p>
+                                    <a href="{{ route('show.profile') }}"  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;"> {{ $post->user->name}}: </a>
                                     <div class="card-body">
                                         <p class="fw-bold fs-5">{{ $post->content }}</p>
                                     </div>
@@ -36,7 +36,7 @@
                                         @csrf
                                         <button type="submit" class="btn rounded-pill btn-warning mt-3">Düzenle</button>
                                     </form>
-                                    <a href="" class="text-decoration-none small text-secondary p-3">Detay</a>
+                                    <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
                                     <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             @endforeach
@@ -49,6 +49,5 @@
                             </form>
                         @endif
         </div>
-
     </div>
 @endsection

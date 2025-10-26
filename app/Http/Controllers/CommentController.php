@@ -23,7 +23,6 @@ class CommentController extends Controller
     }
 
     public function showMyComments(Request $request){
-
         $user = Auth::user();
         $comments= Comment::with('post')->where('user_id', $user->id)->get();
         // dd($comments[2]->post->user->name);

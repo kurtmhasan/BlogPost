@@ -38,6 +38,7 @@ Route::get('/showMyPosts', [PostController::class, 'showMyPosts'])->name('show.m
 route::get('/post/create', [PostController::class, 'createPost'])->name('post.create');
 route::post('/addPost', [PostController::class, 'addPost'])->name('post.add');
 
+Route::get('/showProfile', [ProfileController::class, 'showProfile'])->name('show.profile');
 
 route::delete('/deletePost/{id}', [PostController::class, 'deletePost'])->name('post.delete');
 
@@ -46,5 +47,7 @@ route::post('/showEditPage/{id}', [PostController::class, 'showEditPage'])->name
 
 route::post('/addComment/{post_id}', [CommentController::class, 'addComment'])->name('comment.add');
 route::get('/showMyComments', [CommentController::class, 'showMyComments'])->name('show.my.comments');
+
+Route::get('/showPostDetails/{id}', [PostController::class, 'showPostDetails'])->name('show.post.details');
 
 

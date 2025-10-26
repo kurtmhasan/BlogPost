@@ -26,7 +26,7 @@
                                 <!-- Üst bölüm: kullanıcı adı + profil linki -->
                                 <div class="card-header d-flex justify-content-between align-items-center bg-light">
                                     <div>
-                                        <a href="#" class="fw-bold text-decoration-none text-dark">
+                                        <a href="{{route('show.profile')}}" class="fw-bold text-decoration-none text-dark">
                                             Kullanıcı Adı:{{ $comment->post->user->name }}
                                         </a>
                                     </div>
