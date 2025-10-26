@@ -21,9 +21,9 @@
                                 <p class="fw-bold fs-5">{{ $post->content }}</p>
                             </div>
 
-                            <form action="" method="POST">
+                            <form action="{{ route('comment.add', $post->id ) }}" method="POST">
                                 @csrf
-                                <input type="text" name="content" class="form-control mb-1" placeholder="Yorum yap…">
+                                <input type="text" name="body" class="form-control mb-1" placeholder="Yorum yap…">
                                 <button type="submit" class="btn btn-sm btn-primary">Gönder</button>
                             </form>
                             <a href="" class="text-decoration-none small text-secondary p-3">Detay</a>

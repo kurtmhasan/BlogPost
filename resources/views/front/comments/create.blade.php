@@ -1,1 +1,0 @@
-yorumlar burda atılacak

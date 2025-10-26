@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -16,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('front.posts.index');
+    return redirect()->route('login'); // Uygulama açılır açılmaz login’e yönlendir
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('front.posts.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -42,5 +43,8 @@ route::delete('/deletePost/{id}', [PostController::class, 'deletePost'])->name('
 
 route::post('/editPost/{id}', [PostController::class, 'editPost'])->name('post.edit');
 route::post('/showEditPage/{id}', [PostController::class, 'showEditPage'])->name('show.edit.page');
+
+route::post('/addComment/{post_id}', [CommentController::class, 'addComment'])->name('comment.add');
+route::get('/showMyComments', [CommentController::class, 'showMyComments'])->name('show.my.comments');
 
 

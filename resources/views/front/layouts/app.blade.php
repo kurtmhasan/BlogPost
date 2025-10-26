@@ -148,7 +148,7 @@
                 </li>
                 <li class="menu-item">
                     <a
-                        href=""
+                        href="{{ route('show.my.comments') }}"
                         target="_self"
                         class="menu-link">
                         <i class="menu-icon tf-icons bx bx-reply"></i>
