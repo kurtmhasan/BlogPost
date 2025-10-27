@@ -22,9 +22,13 @@ class CommentController extends Controller
         return redirect()->back()->with('success', 'Yorumladın');
     }
 
-    public function showMyComments(Request $request){
+    public function showMyComments(){
         $user = Auth::user();
-        $comments= Comment::with('post')->where('user_id', $user->id)->get();
+     //   $comments= Comment::with('post')->where('user_id', $user->id)->get();
+          $comments = $user->comments()->with('post')->get();
+
+
+
         // dd($comments[2]->post->user->name);
        // dd($comments);
         return view('front.myComments.showMyComments', compact('comments', 'user'));

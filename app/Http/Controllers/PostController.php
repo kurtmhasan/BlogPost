@@ -41,6 +41,11 @@ class PostController extends Controller
         return redirect()->route('show.my.posts')->with('delete', 'Başarıyla silindi');
     }
     public function editPost(request $request, $id){
+
+        $request->validate([
+            'content'=>'required|max:255|min:3',
+        ]);
+
         $post = Post::findOrFail($id);
         $post->content = $request->content;
         $post->save();
@@ -54,7 +59,8 @@ class PostController extends Controller
 
     public function showPostDetails($id){
         $post = Post::find($id);
-        $comments = Comment::with('post')->where('post_id', $id)->get();
+        //$comments = Comment::with('post')->where('post_id', $id)->get();
+        $comments = $post->comments()->with('post')->get();
         return view('front.posts.details',compact('post', 'comments'));
     }
 }

@@ -27,15 +27,19 @@
                                     <div class="card-body">
                                         <p class="fw-bold fs-5">{{ $post->content }}</p>
                                     </div>
-                                    <form action="{{ route('post.delete', $post->id) }}" method="POST">
-                                        @csrf
-                                        @METHOD('DELETE')
-                                        <button type="submit" class="btn rounded-pill btn-danger">Sil</button>
-                                    </form>
-                                    <form action="{{route('show.edit.page', $post->id)}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn rounded-pill btn-warning mt-3">Düzenle</button>
-                                    </form>
+                                    <div class="d-flex gap-2">
+                                        <form action="{{ route('post.delete', $post->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-outline-danger">Sil</button>
+                                        </form>
+
+                                        <form action="{{ route('show.edit.page', $post->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-outline-dark">Düzenle</button>
+                                        </form>
+                                    </div>
+
                                     <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
                                     <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
                                 </div>

@@ -17,16 +17,23 @@
                     @foreach($posts as $post)
                         <div class="card mb-10">
                             <a href="{{ route('show.profile') }}"  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;">{{ $post->user->name}}</a>
-                            <div class="card-body">
-                                <p class="fw-bold fs-5">{{ $post->content }}</p>
+
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
+                                <button type="button" class="btn btn-outline-danger">
+                                    <i class="menu-icon tf-icons bx  bx-heart-circle"></i>
+                                    <div class="text-truncate" data-i18n="like"></div></button>
                             </div>
 
                             <form action="{{ route('comment.add', $post->id ) }}" method="POST">
                                 @csrf
                                 <input type="text" name="body" class="form-control mb-1" placeholder="Yorum yap…">
-                                <button type="submit" class="btn btn-sm btn-primary">Gönder</button>
+                                <button type="submit" class="btn btn-outline-primary">Gönder</button>
                             </form>
-                            <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
+                                <p class="fw-bold fs-5">like:</p>
+                            </div>
                             <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
                         </div>
                     @endforeach

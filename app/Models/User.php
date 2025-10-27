@@ -44,7 +44,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    public function posts(): HasMany
+    public function posts()
     {
         // 'user_id' foreign key'inin Post modelinde varsayılan olarak bulunduğunu varsayar
         return $this->hasMany(Post::class);
@@ -54,7 +54,7 @@ class User extends Authenticatable
      * Kullanıcının yaptığı tüm yorumları döndürür.
      * İlişki: Bire Çok (One-to-Many)
      */
-    public function comments(): HasMany
+    public function comments()
     {
         // 'user_id' foreign key'inin Comment modelinde varsayılan olarak bulunduğunu varsayar
         return $this->hasMany(Comment::class);

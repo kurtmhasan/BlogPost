@@ -10,13 +10,13 @@ class Post extends Model
     use HasFactory;
     protected $table = 'posts';
     // Post, bir kullanıcıya aittir.
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
     // Post'un birden fazla Comment'i olabilir.
-    public function comments(): HasMany
+    public function comments()
     {
         return $this->hasMany(Comment::class);
     }
