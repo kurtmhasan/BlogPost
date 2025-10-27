@@ -37,7 +37,6 @@
                                 <div class="card-body">
                                     <p class="text-muted">
                                         {{ $comment->post->content }}
-
                                     </p>
                                 </div>
 
@@ -45,6 +44,7 @@
                                 <div class="card-footer bg-white">
                                     <h6 class="fw-bold mb-2">Yorumlar</h6>
                                     <ul class="list-group list-group-flush">
+                                        <a href="{{ route('show.profile') }}"  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;"> {{ $comment->user->name}}: </a>
                                             <li class="list-group-item">{{ $comment->body }}</li>
 
                                     </ul>

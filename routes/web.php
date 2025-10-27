@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,5 +50,6 @@ route::post('/addComment/{post_id}', [CommentController::class, 'addComment'])->
 route::get('/showMyComments', [CommentController::class, 'showMyComments'])->name('show.my.comments');
 
 Route::get('/showPostDetails/{id}', [PostController::class, 'showPostDetails'])->name('show.post.details');
+Route::get('/likePost{id}', [LikeController::class, 'likePost'])->name('like.post');
 
 

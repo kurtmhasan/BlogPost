@@ -10,7 +10,7 @@
                         @csrf
                         <textarea class="form-control mb-2" placeholder="Ne düşünüyorsun" name="content" rows="3"></textarea>
                         <div class="text-end">
-                            <button type="submit" class="btn rounded-pill btn-primary">Paylaş</button>
+                            <button type="submit" class="btn btn-outline-primary">Paylaş</button>
                         </div>
                     </form>
                 </div>

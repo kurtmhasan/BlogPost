@@ -14,7 +14,7 @@
                         @csrf
                         <!-- Post içeriği textarea içinde, kullanıcı düzenleyebilir -->
                         <textarea class="form-control mb-2" name="content" rows="3">{{ $post->content }}</textarea>
-                        <button type="submit" class="btn rounded-pill btn-primary">Kaydet</button>
+                        <button type="submit" class="btn btn-outline-primary">Kaydet</button>
                     </form>
                     <a href="" class="text-decoration-none small text-secondary p-3">Detay</a>
                     <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>

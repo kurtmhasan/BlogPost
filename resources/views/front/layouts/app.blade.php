@@ -72,12 +72,13 @@
         html.layout-menu-collapsed .layout-menu .app-brand .layout-menu-toggle .bx {
             transform: rotate(180deg);
         }
+
     </style>
     <!-- CSS Düzeltmesi Sonu -->
 
 </head>
 
-<body  class="bg-dark text-white">
+<body  class=" text-white">
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">

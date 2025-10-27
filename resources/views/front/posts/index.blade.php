@@ -20,10 +20,12 @@
 
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
-                                <button type="button" class="btn btn-outline-danger">
-                                    <i class="menu-icon tf-icons bx  bx-heart-circle"></i>
-                                    <div class="text-truncate" data-i18n="like"></div></button>
+                                <a href="{{route('like.post', $post->id)}}" class="btn btn-outline-danger d-flex align-items-center">
+                                    <i class="menu-icon tf-icons bx bx-heart-circle"></i>
+                                    <span class="text-truncate ms-1" data-i18n="like">Like</span>
+                                </a>
                             </div>
+
 
                             <form action="{{ route('comment.add', $post->id ) }}" method="POST">
                                 @csrf

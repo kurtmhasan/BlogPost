@@ -22,7 +22,7 @@
             <!-- Database'den gelen postlar -->
                         @if(!empty($posts))
                             @foreach($posts as $post)
-                                <div class="card mb-10">
+                                <div class="card mb-10 ">
                                     <a href="{{ route('show.profile') }}"  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;"> {{ $post->user->name}}: </a>
                                     <div class="card-body">
                                         <p class="fw-bold fs-5">{{ $post->content }}</p>

@@ -25,12 +25,10 @@ class CommentController extends Controller
     public function showMyComments(){
         $user = Auth::user();
      //   $comments= Comment::with('post')->where('user_id', $user->id)->get();
-          $comments = $user->comments()->with('post')->get();
-
-
-
+         // $comments = $user->comments()->with('post')->latest()->get();
+        $comments =$user->comments()->with('post')->latest()->get();
         // dd($comments[2]->post->user->name);
-       // dd($comments);
+       //dd($comments);
         return view('front.myComments.showMyComments', compact('comments', 'user'));
     }
 
