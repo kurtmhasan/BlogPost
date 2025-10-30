@@ -20,7 +20,7 @@
 
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
-                                <a href="{{route('like.post', $post->id)}}" class="btn btn-outline-danger d-flex align-items-center">
+                                <a href="{{route('like.post', $post->id)}} " class="btn btn-outline-danger d-flex align-items-center">
                                     <i class="menu-icon tf-icons bx bx-heart-circle"></i>
                                     <span class="text-truncate ms-1" data-i18n="like">Like</span>
                                 </a>
@@ -34,7 +34,7 @@
                             </form>
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
-                                <p class="fw-bold fs-5">like:</p>
+                              <p>  Like: {{ $post->likes()->count()}}</p>
                             </div>
                             <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
                         </div>

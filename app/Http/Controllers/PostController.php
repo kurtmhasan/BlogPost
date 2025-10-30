@@ -60,7 +60,7 @@ class PostController extends Controller
     public function showPostDetails($id){
         $post = Post::find($id);
         //$comments = Comment::with('post')->where('post_id', $id)->get();
-        $comments = $post->comments()->with('post')->latest()->get();
+        $comments = $post->comments()->latest()->get();
 
         return view('front.posts.details',compact('post', 'comments'));
     }

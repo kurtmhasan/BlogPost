@@ -26,10 +26,11 @@ class CommentController extends Controller
         $user = Auth::user();
      //   $comments= Comment::with('post')->where('user_id', $user->id)->get();
          // $comments = $user->comments()->with('post')->latest()->get();
-        $comments =$user->comments()->with('post')->latest()->get();
+        $posts =$user->comments()->with('post')->latest()->get()->groupBy('post_id');
+        //$i=0;
         // dd($comments[2]->post->user->name);
-       //dd($comments);
-        return view('front.myComments.showMyComments', compact('comments', 'user'));
+     //  dd($comments->toArray());
+        return view('front.myComments.showMyComments', compact('posts', 'user'));
     }
 
 }

@@ -59,4 +59,7 @@ class User extends Authenticatable
         // 'user_id' foreign key'inin Comment modelinde varsayılan olarak bulunduğunu varsayar
         return $this->hasMany(Comment::class);
     }
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
 }
