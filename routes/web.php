@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('front.posts.index');
+    return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -52,6 +52,7 @@ route::get('/showMyComments', [CommentController::class, 'showMyComments'])->nam
 Route::get('/showPostDetails/{id}', [PostController::class, 'showPostDetails'])->name('show.post.details');
 Route::get('/likePost{post_id}', [LikeController::class, 'likePost'])->name('like.post');
 Route::get('/countLike/{post_id}', [LikeController::class, 'countLike'])->name('count.like');
+Route::get('/showMyLike', [LikeController::class, 'showMyLike'])->name('show.my.likes');
 
 
 

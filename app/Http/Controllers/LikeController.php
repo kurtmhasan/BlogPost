@@ -32,4 +32,9 @@ class LikeController extends Controller
         dd($post_id);
         return view('front.posts.index', compact('sayi'));
     }
+    public function showMyLike(){
+        $user = Auth::user();
+        $likes = Like::where('user_id', $user->id)->with('post')->orderBy('created_at', 'desc')->get();
+        return view('front.myLikes.myLikes', compact('likes'));
+    }
 }

@@ -23,13 +23,30 @@ class CommentController extends Controller
     }
 
     public function showMyComments(){
+
+           $user = Auth::user();
+
+                $user_comment_by_posts = Comment::where('user_id', $user->id)->orderBy('created_at', 'desc')->get()->groupBy('post_id');
+
+                /*
+                $commentArr = [];
+                foreach($user_comment_by_posts as $post){
+                    $tempArr = [];
+                    foreach($post as $comment){
+                        $tempArr[] = $comment;
+                    }
+                    $commentArr[] = ['post_id' => $post, 'comments' => $tempArr];
+                }
+*/
+
+      /*  $commentArr = [];
+        foreach($user_comment_by_posts as $post => $comments){
+            $commentArr[] = ['post_id' => $post, 'comments' => $comments->all()];
+            }
+                dd($commentArr);*/
+
         $user = Auth::user();
-     //   $comments= Comment::with('post')->where('user_id', $user->id)->get();
-         // $comments = $user->comments()->with('post')->latest()->get();
         $posts =$user->comments()->with('post')->latest()->get()->groupBy('post_id');
-        //$i=0;
-        // dd($comments[2]->post->user->name);
-     //  dd($comments->toArray());
         return view('front.myComments.showMyComments', compact('posts', 'user'));
     }
 
