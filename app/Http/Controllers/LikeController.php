@@ -11,7 +11,8 @@ class LikeController extends Controller
 {
     //
     public function likePost(Request $request, $post_id){
-        $exists = Like::where('post_id', $post_id)->exists();
+        $user = Auth::user();
+        $exists = Like::where('post_id', $post_id)->where('user_id', $user)->exists();
 
         if(!$exists){
             $post = Post::findOrFail($post_id);
