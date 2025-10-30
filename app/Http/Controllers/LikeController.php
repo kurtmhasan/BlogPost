@@ -12,17 +12,17 @@ class LikeController extends Controller
     //
     public function likePost(Request $request, $post_id){
         $user = Auth::user();
-        $exists = Like::where('post_id', $post_id)->where('user_id', $user)->exists();
+        $exists = Like::where('user_id', $user->id)->where('post_id', $post_id)->exists();
 
         if(!$exists){
             $post = Post::findOrFail($post_id);
             $like = new Like();
             $like->post()->associate($post);
-            $like->user()->associate($request->user());
+            $like->user()->associate($user);
             $like->save();
         }
         else{
-            $like = Like::where('post_id', $post_id)->first();
+            $like = Like::where('post_id', $post_id)->where('user_id', $user->id)->first();
             $like->delete();
         }
         return redirect()->back();
