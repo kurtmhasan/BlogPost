@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -58,7 +58,10 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 
-    public function showProfile(){
-        return view('front.profile.show');
+    public function showProfile($id){
+        $user = User::findOrFail($id);
+        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
+        $comments = $user->comments()->orderBy('created_at', 'desc')->get();
+        return view('front.profile.show', compact('user', 'posts',));
     }
 }

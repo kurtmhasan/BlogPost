@@ -17,7 +17,7 @@
                     <div class="card mb-4 shadow-sm rounded-3">
                         <div class="card-header d-flex justify-content-between align-items-center bg-light">
                             <div>
-                                <a href="{{route('show.profile')}}" class="fw-bold text-decoration-none text-dark">
+                                <a href="{{route('show.profile',$post->user->id)}}" class="fw-bold text-decoration-none text-dark">
                                     {{$post->user->name}}:<br>
                                 </a>
                                 <p class="text-muted">

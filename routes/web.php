@@ -39,7 +39,7 @@ Route::get('/showMyPosts', [PostController::class, 'showMyPosts'])->name('show.m
 route::get('/post/create', [PostController::class, 'createPost'])->name('post.create');
 route::post('/addPost', [PostController::class, 'addPost'])->name('post.add');
 
-Route::get('/showProfile', [ProfileController::class, 'showProfile'])->name('show.profile');
+Route::get('/showProfile/{id}', [ProfileController::class, 'showProfile'])->name('show.profile');
 
 route::delete('/deletePost/{id}', [PostController::class, 'deletePost'])->name('post.delete');
 

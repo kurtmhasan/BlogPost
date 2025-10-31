@@ -14,20 +14,20 @@
                     width="100"
                     id="uploadedAvatar" />
                 <div class="button-wrapper">
-                    <h4 class="text-white mb-0">{{ $user->name ?? 'Kullanıcı Adı' }}</h4>
+                    <h4 class="text-black mb-0">{{ $user->name ?? 'Kullanıcı Adı' }}</h4>
                     <p class="text-muted mb-2"> \&#64;{{ $user->username ?? 'kullaniciadi' }}</p>
                     <div class="d-flex gap-3">
                         <div class="text-center">
-                            <small class="text-white fw-semibold">Post</small>
-                            <h5 class="text-white mb-0">{{ $user->posts_count ?? 0 }}</h5>
+                            <small class="text-black fw-semibold">Post</small>
+                            <h5 class="text-black mb-0">{{ $user->posts_count ?? 0 }}</h5>
                         </div>
                         <div class="text-center">
-                            <small class="text-white fw-semibold">Yorum</small>
-                            <h5 class="text-white mb-0">{{ $user->comments_count ?? 0 }}</h5>
+                            <small class="text-black fw-semibold">Yorum</small>
+                            <h5 class="text-black mb-0">{{ $user->comments_count ?? 0 }}</h5>
                         </div>
                         <div class="text-center">
-                            <small class="text-white fw-semibold">Beğeni</small>
-                            <h5 class="text-white mb-0">{{ $user->likes_count ?? 0 }}</h5>
+                            <small class="text-black fw-semibold">Beğeni</small>
+                            <h5 class="text-black mb-0">{{ $user->likes_count ?? 0 }}</h5>
                         </div>
                     </div>
                 </div>
@@ -59,12 +59,12 @@
             <!-- Postlar Tabı -->
             <div class="tab-pane fade show active" id="navs-profile-posts" role="tabpanel">
                 @forelse ($user->posts ?? [] as $post)
-                    <div class="card text-white mb-3">
+                    <div class="card text-black mb-3">
                         <div class="card-body">
-                            <h5 class="card-title text-white">{{ $post->title }}</h5>
+                            <h5 class="card-title text-black">{{ $post->title }}</h5>
                             <p class="card-text">{{ Str::limit($post->content, 150) }}</p>
                             <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                            <a href="{{ route('post.show', $post->id) }}" class="btn btn-sm btn-outline-primary float-end">Detay</a>
+                            <a href="" class="btn btn-sm btn-outline-primary float-end">Detay</a>
                         </div>
                     </div>
                 @empty
@@ -77,11 +77,11 @@
             <!-- Yorumlar Tabı -->
             <div class="tab-pane fade" id="navs-profile-comments" role="tabpanel">
                 @forelse ($user->comments ?? [] as $comment)
-                    <div class="card  text-white mb-3">
+                    <div class="card  text-black mb-3">
                         <div class="card-body">
                             <p class="card-text">"{{ $comment->body }}"</p>
                             <small class="text-muted">
-                                <a href="{{ route('post.show', $comment->post->id) }}" class="text-muted">
+                                <a href="" class="text-muted">
                                     {{ $comment->post->title ?? 'İlgili Post' }}
                                 </a>
                                 için {{ $comment->created_at->diffForHumans() }} yazdı.
@@ -98,14 +98,14 @@
             <!-- Beğenilenler Tabı -->
             <div class="tab-pane fade" id="navs-profile-likes" role="tabpanel">
                 @forelse ($user->likedPosts ?? [] as $post)
-                    <div class="card bg-dark text-white mb-3">
+                    <div class="card bg-dark text-black mb-3">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
                                     <h5 class="card-title text-white mb-0">{{ $post->title }}</h5>
                                     <small class="text-muted">Yazar: {{ $post->user->name ?? 'Bilinmiyor' }}</small>
                                 </div>
-                                <a href="{{ route('post.show', $post->id) }}" class="btn btn-sm btn-outline-primary">Posta Git</a>
+                                <a href="" class="btn btn-sm btn-outline-primary">Posta Git</a>
                             </div>
                         </div>
                     </div>
