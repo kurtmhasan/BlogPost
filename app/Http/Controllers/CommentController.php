@@ -9,14 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class CommentController extends Controller
 {
     public function addComment(Request $request, $post_id){
-        //dd($request->all());
+        $sub = $request->boolean('sub');
+        $parent_id = $request->parent_id;
         $request->validate([
-                'body'=>'required|max:255|min:3',
-            ]);
-     //   dd($request->body);
+            'body'=>'required|max:255|min:3',
+        ]);
         $comment = new Comment();
         $comment->user()->associate(Auth::user());
         $comment->post_id = $post_id;
+        $comment->parent_id = $parent_id ?? 0;
+        $comment->sub = $sub;
         $comment->body = $request->body;
         $comment->save();
         return redirect()->back()->with('success', 'Yorumladın');
