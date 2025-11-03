@@ -5,6 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\LikeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,4 +57,13 @@ Route::get('/countLike/{post_id}', [LikeController::class, 'countLike'])->name('
 Route::get('/showMyLike', [LikeController::class, 'showMyLike'])->name('show.my.likes');
 
 Route::get('/getComments', [PostController::class, 'getComments'])->name('get.comments');
+
+
+
+Route::middleware(['auth','admin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index']);
+});
+route::delete('/AdminDeletePost/{id}', [AdminController::class, 'AdminDeletePost'])->name('admin.post.delete');
+route::delete('/ChangeComment/{id}', [AdminController::class, 'ChangeComment'])->name('admin.comment.change');
+route::delete('/AdminDeleteComment/{id}', [AdminController::class, 'AdminDeleteComment'])->name('admin.comment.delete');
 
