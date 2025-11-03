@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->text('body');
             $table->boolean('sub')->default(false);
-            $table->unsignedBigInteger('parent_id')->default(false);
+            $table->unsignedBigInteger('parent_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->on('users')->references('id')->onDelete('cascade');
             $table->foreign('post_id')->on('posts')->references('id')->onDelete('cascade');

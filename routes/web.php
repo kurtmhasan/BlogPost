@@ -54,5 +54,5 @@ Route::get('/likePost{post_id}', [LikeController::class, 'likePost'])->name('lik
 Route::get('/countLike/{post_id}', [LikeController::class, 'countLike'])->name('count.like');
 Route::get('/showMyLike', [LikeController::class, 'showMyLike'])->name('show.my.likes');
 
-
+Route::get('/getComments', [PostController::class, 'getComments'])->name('get.comments');
 

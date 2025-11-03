@@ -8,21 +8,26 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function addComment(Request $request, $post_id){
+    public function addComment(Request $request, $post_id)
+    {
         $sub = $request->boolean('sub');
         $parent_id = $request->parent_id;
+
         $request->validate([
-            'body'=>'required|max:255|min:3',
+            'body' => 'required|max:255|min:3',
         ]);
+
         $comment = new Comment();
         $comment->user()->associate(Auth::user());
         $comment->post_id = $post_id;
-        $comment->parent_id = $parent_id ?? 0;
+        $comment->parent_id = $parent_id ?: null; // 🔹 Burayı düzelttik
         $comment->sub = $sub;
         $comment->body = $request->body;
         $comment->save();
+
         return redirect()->back()->with('success', 'Yorumladın');
     }
+
 
     public function showMyComments(){
 
@@ -51,5 +56,8 @@ class CommentController extends Controller
         $posts =$user->comments()->with('post')->latest()->get()->groupBy('post_id');
         return view('front.myComments.showMyComments', compact('posts', 'user'));
     }
+
+
+
 
 }

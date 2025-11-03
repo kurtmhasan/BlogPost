@@ -60,8 +60,68 @@ class PostController extends Controller
     public function showPostDetails($id){
         $post = Post::find($id);
         //$comments = Comment::with('post')->where('post_id', $id)->get();
-        $comments = $post->comments()->latest()->get();
-
+       // $comments = $post->comments()->latest()->get();
+        $comments = $this->getComments($id);
         return view('front.posts.details',compact('post', 'comments'));
     }
+  /*  public function getCommentTree($post_id=1)
+    {
+        // Yorumları al
+        $comments = Comment::with('user')
+            ->where('post_id', $post_id)
+            ->get()
+            ->toArray();
+
+        // ID'ye göre indeksle
+        $byParent = [];
+        foreach ($comments as $comment) {
+            $byParent[$comment['parent_id']][] = $comment;
+        }
+
+        // Recursive fonksiyon
+        $buildTree = function ($parentId) use (&$buildTree, &$byParent) {
+            $branch = [];
+
+            if (!isset($byParent[$parentId])) {
+                return $branch;
+            }
+
+            foreach ($byParent[$parentId] as $comment) {
+                $comment['children'] = $buildTree($comment['id']);
+                $branch[] = $commBVent;
+            }
+
+            return $branch;
+        };
+
+        $tree = $buildTree(null); // root seviyesindeki yorumlar (parent_id = null)
+dd($tree);
+        return response()->json([
+            'success' => true,
+            'data' => $tree
+        ]);
+    }
+*/
+
+    function commentJsonBuilder($comments)
+    {
+        $arr=[];
+        foreach ($comments as $comment) {
+            $sub = null;
+            if (Comment::where('parent_id', $comment->id)->count() > 0){
+                $sub = $this->commentJsonBuilder(Comment::where('parent_id', $comment->id)->get());
+            }
+            array_push($arr, ['comment'=>$comment, 'subComment' =>$sub]);
+        }
+
+        return $arr;
+    }
+
+
+    function getComments($post_id)
+    {
+        $comments = Comment::where('Post_id',$post_id)->where('sub', 0)->get();
+        return $this->commentJsonBuilder($comments);
+    }
+
 }

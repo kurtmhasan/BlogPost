@@ -32,7 +32,6 @@
                                     <li class="list-group-item" style="border-bottom: 1px solid #dee2e6;">
                                         {{$comment->user->name}}:
                                         {{ $comment->body }}<br>
-                                        {{ $comment->created_at->diffForHumans() }}
                                     </li>
                                 </ul>
                             </div>
