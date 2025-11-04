@@ -1,10 +1,12 @@
+
 <x-guest-layout>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
+
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
@@ -45,3 +47,14 @@
         </div>
     </form>
 </x-guest-layout>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('error'))
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: @json(session('error')),
+        });
+    </script>
+@endif

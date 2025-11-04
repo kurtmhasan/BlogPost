@@ -58,7 +58,7 @@ class PostController extends Controller
     }
 
     public function showPostDetails($id){
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         //$comments = Comment::with('post')->where('post_id', $id)->get();
        // $comments = $post->comments()->latest()->get();
         $comments = $this->getComments($id);
@@ -116,6 +116,7 @@ dd($tree);
 
         return $arr;
     }
+
 
 
     function getComments($post_id)

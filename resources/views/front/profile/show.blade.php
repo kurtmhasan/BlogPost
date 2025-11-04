@@ -61,10 +61,9 @@
                 @forelse ($user->posts ?? [] as $post)
                     <div class="card text-black mb-3">
                         <div class="card-body">
-                            <h5 class="card-title text-black">{{ $post->title }}</h5>
                             <p class="card-text">{{ Str::limit($post->content, 150) }}</p>
                             <small class="text-muted">{{ $post->created_at->diffForHumans() }}</small>
-                            <a href="" class="btn btn-sm btn-outline-primary float-end">Detay</a>
+                            <a href="{{route('show.post.details', $post->id)}}" class="btn btn-sm btn-outline-primary float-end">Detay</a>
                         </div>
                     </div>
                 @empty
@@ -81,7 +80,7 @@
                         <div class="card-body">
                             <p class="card-text">"{{ $comment->body }}"</p>
                             <small class="text-muted">
-                                <a href="" class="text-muted">
+                                <a href="{{route('show.post.details', $comment->post->id)}}" class="text-muted">
                                     {{ $comment->post->title ?? 'İlgili Post' }}
                                 </a>
                                 için {{ $comment->created_at->diffForHumans() }} yazdı.
@@ -97,15 +96,14 @@
 
             <!-- Beğenilenler Tabı -->
             <div class="tab-pane fade" id="navs-profile-likes" role="tabpanel">
-                @forelse ($user->likedPosts ?? [] as $post)
-                    <div class="card bg-dark text-black mb-3">
-                        <div class="card-body">
+                @forelse ($likes ?? [] as $like)
+                    <div class="card bg-dark text-white mb-3">
+                        <div class="card">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="card-title text-white mb-0">{{ $post->title }}</h5>
-                                    <small class="text-muted">Yazar: {{ $post->user->name ?? 'Bilinmiyor' }}</small>
+                                    <small class="text-muted">beğenilen post: {{ $like->post->content ?? 'Bilinmiyor' }}</small>
                                 </div>
-                                <a href="" class="btn btn-sm btn-outline-primary">Posta Git</a>
+                                <a href="{{route('show.post.details',$like->post_id)}}" class="btn btn-sm btn-outline-primary">Posta Git</a>
                             </div>
                         </div>
                     </div>

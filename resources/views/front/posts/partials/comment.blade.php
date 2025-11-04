@@ -6,13 +6,12 @@
 
 @if(Auth::user()->role=='admin')
         <div class="d-flex gap-2">
-        <form action="{{ route('admin.comment.change', $commentData['comment']->id) }}" method="POST">
+        <form action="{{ route('admin.updateComment', $commentData['comment']->id) }}" method="POST">
             @csrf
-            @method('DELETE')
             <button type="submit" class="btn btn-outline-warning">Sil</button>
         </form>
 
-        <form action="{{ route('admin.comment.delete', $commentData['comment']->id) }}" method="POST">
+        <form action="{{ route('admin.deleteComment', $commentData['comment']->id) }}" method="POST">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-outline-danger">kaldır</button>

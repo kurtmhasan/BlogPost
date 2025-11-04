@@ -17,10 +17,22 @@
                 @foreach($posts as $post)
                     <div class="card mb-10">
                         <a href=""  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;">{{ $post->user->name}}</a>
+                        @if($post->user->is_active)
+                        <form action="{{ route('admin.ban.user', $post->user->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
+                            @csrf
+                            <button type="submit" class="btn btn-sm btn-outline-danger">kullanıcıyı banla</button>
+                        </form>
+                        @endif
+                        @if(!$post->user->is_active)
+                            <form action="{{ route('admin.ban.user', $post->user->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-primary">ban kaldır</button>
+                            </form>
+                        @endif
 
                         <div class="card position-relative p-3 mb-3">
                             <!-- Sil butonu sağ üstte -->
-                            <form action="{{ route('admin.post.delete', $post->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
+                            <form action="{{ route('admin.deletePost', $post->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,7 +14,7 @@ class AdminController extends Controller
     $comments=Comment::all();
     return view('adminPanel.index', compact('posts','comments'));
 }
-    public function AdmindeletePost($id){
+    public function AdminDeletePost($id){
         $post = POST::findorFail($id);
         $post->delete();
         return redirect()->back()->with('success', 'Post başarıyla silindi.');
@@ -27,10 +28,20 @@ class AdminController extends Controller
         }
         return redirect()->back();
     }
-    public function AdmindeleteComment($id){
+    public function AdminDeleteComment($id){
         $comment = Comment::findorFail($id);
         $comment->delete();
         return redirect()->back();
     }
-
+    public function BanUser($id){
+        $user = User::findorFail($id);
+        if($user->is_active){
+            $user->is_active = false;
+            $user->save();
+        }else{
+            $user->is_active = true;
+            $user->save();
+        }
+        return redirect()->back();
+    }
 }

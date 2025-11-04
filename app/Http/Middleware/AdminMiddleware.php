@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminMiddleware
@@ -15,10 +16,16 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->role === 'admin') {
-            return $next($request);
+        if (Auth::check()) {
+            if (Auth::user()->role == 'admin') {
+                return $next($request);
+            }
+            else {
+                abort(403);
+            }
         }
-
-        abort(403, 'Bu alana erişim yetkiniz yok.');
+        else {
+            return redirect()->route('login');
+        }
     }
 }

@@ -61,7 +61,7 @@ class ProfileController extends Controller
     public function showProfile($id){
         $user = User::findOrFail($id);
         $posts = $user->posts()->orderBy('created_at', 'desc')->get();
-        $comments = $user->comments()->orderBy('created_at', 'desc')->get();
-        return view('front.profile.show', compact('user', 'posts',));
+        $likes = $user->likes()->orderBy('created_at', 'desc')->get();
+        return view('front.profile.show', compact('user', 'posts','likes'));
     }
 }

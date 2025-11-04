@@ -25,7 +25,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified', 'active'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -60,10 +60,13 @@ Route::get('/getComments', [PostController::class, 'getComments'])->name('get.co
 
 
 
-Route::middleware(['auth','admin'])->group(function () {
-    Route::get('/admin', [AdminController::class, 'index']);
+    Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
+    Route::get('/', [AdminController::class, 'index']);
+    Route::post('/BanUser{id}', [AdminController::class, 'BanUser'])->name('admin.ban.user');
+    Route::delete('/AdminDeletePost/{id}', [AdminController::class, 'AdminDeletePost'])->name('admin.deletePost');
+    Route::group(['prefix' => 'comment'], function () {
+        Route::post('/ChangeComment/{id}', [AdminController::class, 'ChangeComment'])->name('admin.updateComment');
+            Route::delete('/AdminDeleteComment/{id}', [AdminController::class, 'AdminDeleteComment'])->name('admin.deleteComment');
+    });
 });
-route::delete('/AdminDeletePost/{id}', [AdminController::class, 'AdminDeletePost'])->name('admin.post.delete');
-route::delete('/ChangeComment/{id}', [AdminController::class, 'ChangeComment'])->name('admin.comment.change');
-route::delete('/AdminDeleteComment/{id}', [AdminController::class, 'AdminDeleteComment'])->name('admin.comment.delete');
 

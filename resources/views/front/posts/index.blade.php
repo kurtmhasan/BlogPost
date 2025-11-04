@@ -16,7 +16,7 @@
             @if(!empty($posts))
                     @foreach($posts as $post)
                         <div class="card mb-10">
-                            <a href=""  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;">{{ $post->user->name}}</a>
+                            <a href="{{route('show.profile', $post->user->id)}}"  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;">{{ $post->user->name}}</a>
 
                             <div class="card-body d-flex justify-content-between align-items-center">
                                 <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
