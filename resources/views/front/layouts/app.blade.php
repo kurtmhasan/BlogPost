@@ -73,6 +73,7 @@
             transform: rotate(180deg);
         }
 
+
     </style>
     <!-- CSS Düzeltmesi Sonu -->
 
@@ -84,6 +85,7 @@
     <div class="layout-container">
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+
             <div class="app-brand demo">
                 <a href="{{ route('show.posts') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
@@ -145,22 +147,21 @@
                     <i class="bx bx-chevron-left align-middle"></i>
                 </a>
             </div>
+            <div class="text-center mb-3 mt-3">
+                <a href="{{ route('show.profile', Auth::user()->id) }}" class="d-inline-block">
+                    <img src="{{ asset('adminPanel/assets/img/avatars/1.png') }}"
+                         alt="Profil"
+                         class="rounded-circle"
+                         width="80" height="80">
+                </a>
+                <p class="mt-2 fw-bold text-dark">{{ Auth::user()->name }}</p>
+            </div>
 
             <div class="menu-divider mt-0"></div>
 
             <div class="menu-inner-shadow"></div>
 
-            <ul class="menu-inner py-1">
-                <!-- Menü içeriğiniz (Profil, Postlarım vb.) -->
-                <li class="menu-item">
-                    <a
-                        href="{{ route('profile.edit') }}"
-                        target="_self"
-                        class="menu-link">
-                        <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                        <div class="text-truncate" data-i18n="profile">Profil</div>
-                    </a>
-                </li>
+            <!-- Menü içeriğiniz (Profil, Postlarım vb.) -->
                 <li class="menu-item">
                     <a
                         href="{{ route('show.posts') }}"
@@ -207,6 +208,17 @@
                         <div class="text-truncate" data-i18n="comment">Postala</div>
                     </a>
                 </li>
+            <ul class="menu-inner py-1">
+
+                <li class="menu-item">
+                    <a
+                        href="{{ route('profile.edit')}}"
+                        target="_self"
+                        class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-cog"></i>
+                        <div class="text-truncate" data-i18n="profile">Profil Düzenle</div>
+                    </a>
+                </li>
             </ul>
 
         </aside>
@@ -215,27 +227,15 @@
         <!-- Ana İçerik Alanı -->
         <div class="layout-page">
 
-            <!-- Navbar (üst bar) hala gizli (`d-none`), ama JS'in çalışması için var -->
-            <nav
-                class="layout-navbar container-xxl navbar-detached navbar navbar-expand-xl align-items-center bg-navbar-theme d-none"
-                id="layout-navbar">
-                <!-- Bu GİZLİ buton, JS tarafından tetiklenecek olan ASIL butondur -->
-                <div class="layout-menu-toggle navbar-nav align-items-xl-center me-4 me-xl-0">
-                    <a class="nav-item nav-link px-0 me-xl-6" href="javascript:void(0)">
-                        <i class="icon-base bx bx-menu icon-md"></i>
-                    </a>
-                </div>
-                <div class="navbar-nav-right d-flex align-items-center justify-content-end" id="navbar-collapse">
-                </div>
-            </nav>
-            <!-- / Gizli Navbar -->
+
 
             <!-- Content wrapper -->
             <div class="content-wrapper">
                 <!-- Content -->
-                <div class="container-xxl flex-grow-1 container-p-y">
+                <div class="container-xxl flex-grow-1 container-p-y mt-5">
                     @yield('content')
                 </div>
+
                 <!-- / Content -->
 
                 <!-- Footer -->

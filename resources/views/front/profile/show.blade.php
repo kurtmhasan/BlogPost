@@ -6,8 +6,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <div class="d-flex align-items-start align-items-sm-center gap-4">
-                <img
-                    src="https://placehold.co/100x100/343840/FFFFFF?text={{ substr($user->name ?? 'U', 0, 1) }}"
+                <img src="{{ asset('adminPanel/assets/img/avatars/1.png') }}"
                     alt="User Avatar"
                     class="d-block rounded"
                     height="100"
@@ -19,15 +18,15 @@
                     <div class="d-flex gap-3">
                         <div class="text-center">
                             <small class="text-black fw-semibold">Post</small>
-                            <h5 class="text-black mb-0">{{ $user->posts_count ?? 0 }}</h5>
+                            <h5 class="text-black mb-0">{{ isset($user->posts) ? $user->posts->count() : 0 }}</h5>
                         </div>
                         <div class="text-center">
                             <small class="text-black fw-semibold">Yorum</small>
-                            <h5 class="text-black mb-0">{{ $user->comments_count ?? 0 }}</h5>
+                            <h5 class="text-black mb-0">{{ isset($user->comments)  ?$user->comments->count() : 0 }}</h5>
                         </div>
                         <div class="text-center">
                             <small class="text-black fw-semibold">Beğeni</small>
-                            <h5 class="text-black mb-0">{{ $user->likes_count ?? 0 }}</h5>
+                            <h5 class="text-black mb-0">{{ isset($user->likes) ?$user->likes->count() : 0 }}</h5>
                         </div>
                     </div>
                 </div>

@@ -49,7 +49,7 @@ class User extends Authenticatable
     public function posts()
     {
         // 'user_id' foreign key'inin Post modelinde varsayılan olarak bulunduğunu varsayar
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'user_id', 'id');
     }
 
     /**
