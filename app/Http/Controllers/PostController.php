@@ -26,9 +26,20 @@ class PostController extends Controller
 
     }
 
-    public function showPosts(){
-        $posts = Post::latest()->get();
-        return view('front.posts.index',compact('posts'));
+    public function showPosts(Request $request){
+        $posts = Post::with(['user','likes'])
+            ->orderBy('created_at','desc')
+            ->paginate(5);
+        $user=Auth::user();
+        foreach ($posts as $post) {
+            $post->isLiked = $post->likes->contains('user_id', $user->id);
+        }
+
+        if ($request->ajax()) {
+            return view('front.posts.partials.posts', compact('posts'))->render();
+        }
+
+        return view('front.posts.index', compact('posts'));
     }
     public function showMyPosts(){
         $posts = Auth::user()->posts()->latest()->get();

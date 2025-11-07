@@ -52,7 +52,7 @@ route::post('/addComment/{post_id}', [CommentController::class, 'addComment'])->
 route::get('/showMyComments', [CommentController::class, 'showMyComments'])->name('show.my.comments');
 
 Route::get('/showPostDetails/{id}', [PostController::class, 'showPostDetails'])->name('show.post.details');
-Route::get('/likePost{post_id}', [LikeController::class, 'likePost'])->name('like.post');
+Route::post('/likePost{post_id}', [LikeController::class, 'likePost'])->name('like.post');
 Route::get('/countLike/{post_id}', [LikeController::class, 'countLike'])->name('count.like');
 Route::get('/showMyLike', [LikeController::class, 'showMyLike'])->name('show.my.likes');
 
