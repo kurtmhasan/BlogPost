@@ -1,64 +1,86 @@
-@extends('front.layouts.app')
+@extends('adminPanel.layouts.admin')
 
 @section('content')
+    {{--
+         DÜZELTME:
+         height ve overflow kaldırıldı.
+         Böylece içerik uzadıkça sayfa uzayacak, iç scrollbar oluşmayacak.
+    --}}
+    <div id="post-wrapper" style="max-width: 600px; margin: 0 auto; padding: 20px;">
 
-    <!-- Full screen wrapper, card’lar burada ortalanacak -->
-    <div  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center;
-            overflow-y: auto; padding: 20px;
-            z-index: 1000; background: rgba(255,255,255,0.9);">
-        <div style="width: 100%; max-width: 600px;">
-            @if(session('success'))
-                <script>
-                    alert("{{ session('success') }}");
-                </script>
-            @endif
-            @if(!empty($posts))
-                @foreach($posts as $post)
-                    <div class="card mb-10">
-                        <a href=""  class="fw-bold fs-5 m-5" style="color: black; text-decoration: none;">{{ $post->user->name}}</a>
-                        @if($post->user->is_active)
-                        <form action="{{ route('admin.ban.user', $post->user->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
-                            @csrf
-                            <button type="submit" class="btn btn-sm btn-outline-danger">kullanıcıyı banla</button>
-                        </form>
-                        @endif
-                        @if(!$post->user->is_active)
-                            <form action="{{ route('admin.ban.user', $post->user->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-primary">ban kaldır</button>
-                            </form>
-                        @endif
+        {{-- Session Success Alert --}}
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show mb-4" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
-                        <div class="card position-relative p-3 mb-3">
-                            <!-- Sil butonu sağ üstte -->
-                            <form action="{{ route('admin.deletePost', $post->id) }}" method="POST" class="position-absolute" style="top: 10px; right: 10px;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
-                            </form>
-
-                            <div class="card-body">
-                                <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
-                            </div>
-
-                            <div class="card-body d-flex justify-content-between align-items-center">
-                                <a href="{{ route('show.post.details', $post->id) }}" class="text-decoration-none small text-secondary">Detay</a>
-                                <p>Like: {{ $post->likes()->count() }}</p>
-                            </div>
-
-                            <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
-                        </div>
-                @endforeach
-            @else
-                <p class="fw-bold fs-5">Dostum Önce bir şeyler paylaş</p>
-                <form action="{{ route('post.create') }}">
-                    <div class="text-end">
-                        <button type="submit" class="btn rounded-pill btn-primary">Paylaşım yappp</button>
-                    </div>
-                </form>
-            @endif
+        {{-- Postların Listeleneceği Container --}}
+        <div id="post-data">
+            @include('adminPanel.posts.partials.posts', ['posts' => $posts])
         </div>
 
+        {{-- Loading Spinner --}}
+        <div class="text-center my-4" id="loading" style="display: none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Yükleniyor...</span>
+            </div>
+        </div>
+
+        {{-- Veri Bitti Mesajı --}}
+        <div class="text-center my-4 text-muted" id="no-more-data" style="display: none;">
+            <small>Daha fazla gönderi yok.</small>
+        </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            let page = 1;
+            let loading = false;
+            let hasMore = "{{ $posts->hasMorePages() ? '1' : '0' }}" === "1";
+
+            // ARTIK PENCEREYİ DİNLİYORUZ
+            $(window).scroll(function() {
+                if (loading || !hasMore) return;
+
+                // Sayfanın en altına 100px kala tetikle
+                // $(document).height() tüm sayfa yüksekliği
+                // $(window).height() görünen ekran yüksekliği
+                if($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                    loadMore();
+                }
+            });
+
+            function loadMore() {
+                loading = true;
+                $('#loading').show();
+                page++;
+
+                $.ajax({
+                    url: "{{ route('admin.index') }}",
+                    type: 'GET',
+                    data: { page: page },
+                    success: function(response) {
+                        if ($.trim(response) === '') {
+                            hasMore = false;
+                            $('#no-more-data').show();
+                            $('#loading').hide();
+                        } else {
+                            $('#post-data').append(response);
+                            loading = false;
+                            $('#loading').hide();
+                        }
+                    },
+                    error: function() {
+                        console.error("Yükleme hatası.");
+                        loading = false;
+                        $('#loading').hide();
+                    }
+                });
+            }
+        });
+    </script>
 @endsection

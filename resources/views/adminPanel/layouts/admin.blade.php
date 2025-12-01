@@ -25,6 +25,7 @@
     />
 
     <link rel="stylesheet" href="{{ asset('adminPanel/assets/vendor/css/core.css') }}" class="template-customizer-core-css" /> <link rel="stylesheet" href="{{ asset('adminPanel/assets/vendor/css/theme-default.css') }}" class="template-customizer-theme-css" /> <link rel="stylesheet" href="{{ asset('adminPanel/assets/css/demo.css') }}" /> <link rel="stylesheet" href="{{ asset('adminPanel/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" /> <script src="{{ asset('adminPanel/assets/vendor/js/helpers.js') }}"></script> <script src="{{ asset('adminPanel/assets/js/config.js') }}"></script> @stack('styles')
+    @yield('styles')
 </head>
 
 <body>
@@ -161,8 +162,8 @@
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
+@yield('scripts')
 @stack('scripts')
-
 
 </body>
 </html>

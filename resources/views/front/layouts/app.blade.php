@@ -338,7 +338,7 @@
 
 </script>
 <!-- "KÖPRÜ" SCRİPTİ SONU -->
-
+@yield('scripts')
 </body>
 </html>
 

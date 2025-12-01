@@ -9,12 +9,21 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    public function index()
-{
-    $posts=Post::all();
-    $comments=Comment::all();
-    return view('adminPanel.index', compact('posts','comments'));
-}
+    public function index(Request $request)
+    {
+        $posts = Post::with(['user'])
+            ->withCount('likes')
+            ->orderBy('created_at', 'desc')
+            ->paginate(5);
+
+        if ($request->ajax()) {
+            return view('adminPanel.posts.partials.posts', compact('posts'))->render();
+        }
+
+        return view('adminPanel.index', compact('posts'));
+    }
+
+
     public function AdminUserList()
     {
         $users = User::query();
