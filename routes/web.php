@@ -61,7 +61,9 @@ Route::get('/getComments', [PostController::class, 'getComments'])->name('get.co
 
 
     Route::group(['prefix' => 'admin', 'middleware' => ['admin']], function () {
-    Route::get('/', [AdminController::class, 'index']);
+    Route::get('/', [AdminController::class, 'index'])->name('admin.index');;
+    Route::get('/AdminUserList', [AdminController::class, 'AdminUserList'])->name('admin.list.user');
+    Route::get('/AdminUserListPage', [AdminController::class, 'AdminUserListPage'])->name('admin.page.userList');
     Route::post('/BanUser{id}', [AdminController::class, 'BanUser'])->name('admin.ban.user');
     Route::delete('/AdminDeletePost/{id}', [AdminController::class, 'AdminDeletePost'])->name('admin.deletePost');
     Route::group(['prefix' => 'comment'], function () {

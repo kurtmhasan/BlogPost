@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\User;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -14,6 +15,19 @@ class AdminController extends Controller
     $comments=Comment::all();
     return view('adminPanel.index', compact('posts','comments'));
 }
+    public function AdminUserList()
+    {
+        $users = User::query();
+        return DataTables::of($users)->addColumn('action', function ($user) {
+                return $user->id;
+            })->rawColumns(['action'])->make(true);
+    }
+
+
+public function AdminUserListPage(){
+return view('adminPanel.users.userList');
+}
+
     public function AdminDeletePost($id){
         $post = POST::findorFail($id);
         $post->delete();
@@ -44,4 +58,5 @@ class AdminController extends Controller
         }
         return redirect()->back();
     }
+
 }
