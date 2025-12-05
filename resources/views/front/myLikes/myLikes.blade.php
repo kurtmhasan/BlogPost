@@ -13,6 +13,11 @@
                     alert("{{ session('success') }}");
                 </script>
             @endif
+                @if(session('unliked'))
+                <script>
+                    alert("{{ session('unliked') }}");
+                </script>
+            @endif
 
                 @foreach($likes as $like)
                     <div class="card mb-10">
@@ -20,10 +25,15 @@
 
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <p class="fw-bold fs-5 mb-0">{{ $like->post->content }}</p>
-                            <a href="{{route('like.post', $like->post->id)}} " class="btn btn-outline-danger d-flex align-items-center">
+                            <button type="button"
+                                    class="btn btn-danger d-flex align-items-center like-btn"
+                                    data-id="{{ $like->post->id }}"
+                                    data-url="{{ route('like.post', $like->post->id) }}">
                                 <i class="menu-icon tf-icons bx bx-heart-circle"></i>
-                                <span class="text-truncate ms-1" data-i18n="like">Like</span>
-                            </a>
+                                <span class="text-truncate ms-1">Like</span>
+                            </button>
+
+
                         </div>
 
 
@@ -34,13 +44,68 @@
                         </form>
                         <div class="card-body d-flex justify-content-between align-items-center">
                             <a href="{{ route('show.post.details', $like->post->id) }}" class="text-decoration-none small text-secondary p-3">Detay</a>
-                            <p>  Like: {{ $like->post->likes()->count()}}</p>
+                            <p>
+                                Like:<span id="like-count-{{ $like->post->id }}">
+                                {{ $like->post->likes()->count() }}
+                                </span>
+                            </p>
+
+
                         </div>
                         <small class="text-muted">Paylaşıldı: {{ $like->post->created_at->diffForHumans() }}</small>
                     </div>
                 @endforeach
         </div>
-
     </div>
 @endsection
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            // Click event handler
+            $(document).on('click', '.like-btn', function(e) {
+                e.preventDefault();
+
+                let $btn = $(this);
+                let postId = $btn.data('id');
+                let url = $btn.data('url') || $btn.attr('href');
+
+                if (!url) {
+                    console.error('Like URL not found for post', postId);
+                    return;
+                }
+
+                // Görsel olarak kısa süreli disable et
+                $btn.prop('disabled', true);
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    },
+                }).done(function(response) {
+                    // Like sayısını güncelle
+                    if (response.likeCount !== undefined) {
+                        $('#like-count-' + postId).text(response.likeCount);
+                    }
+
+                    // Buton rengini değiştir
+                    if (response.liked || response.status === 'liked') {
+                        $btn.removeClass('btn-outline-danger').addClass('btn-danger');
+                    } else {
+                        $btn.removeClass('btn-danger').addClass('btn-outline-danger');
+                    }
+                }).fail(function(xhr) {
+                    console.error('Like error:', xhr.status, xhr.responseText);
+                    if(xhr.status === 401) alert("Giriş yapmanız gerekiyor.");
+                    else alert("Bir hata oluştu: " + xhr.status);
+                }).always(function() {
+                    // Butonu tekrar aktif et
+                    $btn.prop('disabled', false).css('pointer-events', '');
+                });
+            });
+        });
+    </script>
+@endsection
+
 

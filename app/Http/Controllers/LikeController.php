@@ -20,16 +20,21 @@ class LikeController extends Controller
             $like->user()->associate($user);
             $like->save();
             $liked = true;
+            return response()->json([
+                'liked' => $liked,
+                'likeCount' => $post->likes()->count()
+            ]);
         }
         else{
             $like = Like::where('post_id', $post_id)->where('user_id', $user->id)->first();
             $like->delete();
             $liked = false;
+            return response()->json([
+                'liked' => $liked,
+                'likeCount' => $post->likes()->count()
+            ]);
         }
-        return response()->json([
-            'liked' => $liked,
-            'likeCount' => $post->likes()->count()
-        ]);
+
     }
 
     public function countLike($post_id){

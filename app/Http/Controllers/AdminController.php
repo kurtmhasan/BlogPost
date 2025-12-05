@@ -40,7 +40,7 @@ return view('adminPanel.users.userList');
     public function AdminDeletePost($id){
         $post = POST::findorFail($id);
         $post->delete();
-        return redirect()->back()->with('success', 'Post başarıyla silindi.');
+        return redirect()->back()->with('deleteP', 'Post başarıyla silindi.');
 
     }
     public function ChangeComment($id){
@@ -54,7 +54,7 @@ return view('adminPanel.users.userList');
     public function AdminDeleteComment($id){
         $comment = Comment::findorFail($id);
         $comment->delete();
-        return redirect()->back();
+        return redirect()->back()->with('deleteC', 'Yorum başarıyla silindi.');
     }
     public function BanUser($id){
         $user = User::findorFail($id);
@@ -66,6 +66,11 @@ return view('adminPanel.users.userList');
             $user->save();
         }
         return redirect()->back();
+    }
+
+    public function AdminShowUser($id){
+        $user = User::findorFail($id);
+        return view('adminPanel.users.showUser', compact('user'));
     }
 
 }

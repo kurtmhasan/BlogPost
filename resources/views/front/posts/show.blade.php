@@ -33,7 +33,6 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-outline-danger">Sil</button>
                                         </form>
-
                                         <form action="{{ route('show.edit.page', $post->id) }}" method="POST">
                                             @csrf
                                             <button type="submit" class="btn btn-outline-dark">Düzenle</button>

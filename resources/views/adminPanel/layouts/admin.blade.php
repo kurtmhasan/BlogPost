@@ -110,20 +110,24 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="#">
+                                    <a class="dropdown-item" href="{{route('show.posts')}}">
                                         <i class="bx bx-user me-2"></i>
-                                        <span class="align-middle">Profilim</span>
+                                        <span class="align-middle">Uygulamaya git</span>
                                     </a>
                                 </li>
                                 <li>
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="javascript:void(0);">
-                                        <i class="bx bx-power-off me-2"></i>
-                                        <span class="align-middle">Çıkış Yap</span>
-                                    </a>
+                                    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item" style="border:0; background:transparent; padding:0;">
+                                            <i class="bx bx-power-off me-2"></i>
+                                            <span class="align-middle">Çıkış Yap</span>
+                                        </button>
+                                    </form>
                                 </li>
+
                             </ul>
                         </li>
                     </ul>

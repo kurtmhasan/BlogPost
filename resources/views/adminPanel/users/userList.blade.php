@@ -32,7 +32,14 @@
                 ajax: '{{ route('admin.list.user') }}',
                 columns: [
                     { data: 'id', name: 'id' },
-                    { data: 'name', name: 'name' },
+                    {
+                        data: 'name',
+                        name: 'name',
+                        render:function (name,type,row){
+                            let url = "{{route('admin.show.user', ':id')}}".replace(':id',row.id);
+                            return `<a href="${url}" class="user-link">${name}</a>`;
+                        }
+                    },
                     { data: 'role', name: 'role' },
                     { data: 'is_active', name: 'is_active' },
                     { data: 'email', name: 'email' },

@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="{{asset('adminPanel/assets/vendor/libs/apex-charts/apex-charts.css')}}" />
 
+
     <!-- Page CSS -->
 
     <!-- Helpers -->
@@ -83,6 +84,7 @@
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
     <div class="layout-container">
+
         <!-- Menu -->
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
@@ -162,6 +164,17 @@
             <div class="menu-inner-shadow"></div>
 
             <!-- Menü içeriğiniz (Profil, Postlarım vb.) -->
+            @if(Auth::user()->role == 'admin')
+                <li class="menu-item">
+                    <a
+                        href="{{ route('admin.index') }}"
+                        target="_self"
+                        class="menu-link">
+                        <i class="menu-icon tf-icons bx bx-user"></i>
+                        <div class="text-truncate" data-i18n="post">Admin Panele Geç</div>
+                    </a>
+                </li>
+            @endif
                 <li class="menu-item">
                     <a
                         href="{{ route('show.posts') }}"

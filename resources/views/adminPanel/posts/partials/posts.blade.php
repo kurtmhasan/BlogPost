@@ -1,8 +1,9 @@
 @foreach($posts as $post)
     <div class="card mb-4">
         <div class="card-header d-flex justify-content-between align-items-center">
+            <a href="{{route('admin.show.user',$post->user->id)}}" style="color: inherit; text-decoration: none;" >
             <span class="fw-bold fs-5">{{ $post->user->name }}</span>
-
+            </a>
             {{-- Buton İşlemleri --}}
             <form action="{{ route('admin.ban.user', $post->user->id) }}" method="POST">
                 @csrf

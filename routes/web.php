@@ -64,6 +64,7 @@ Route::get('/getComments', [PostController::class, 'getComments'])->name('get.co
     Route::get('/', [AdminController::class, 'index'])->name('admin.index');;
     Route::get('/AdminUserList', [AdminController::class, 'AdminUserList'])->name('admin.list.user');
     Route::get('/AdminUserListPage', [AdminController::class, 'AdminUserListPage'])->name('admin.page.userList');
+    Route::get('/user/{id}', [AdminController::class, 'AdminShowUser'])->name('admin.show.user');
     Route::post('/BanUser{id}', [AdminController::class, 'BanUser'])->name('admin.ban.user');
     Route::delete('/AdminDeletePost/{id}', [AdminController::class, 'AdminDeletePost'])->name('admin.deletePost');
     Route::group(['prefix' => 'comment'], function () {
