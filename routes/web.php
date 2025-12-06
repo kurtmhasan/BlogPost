@@ -49,6 +49,7 @@ route::post('/editPost/{id}', [PostController::class, 'editPost'])->name('post.e
 route::post('/showEditPage/{id}', [PostController::class, 'showEditPage'])->name('show.edit.page');
 
 route::post('/addComment/{post_id}', [CommentController::class, 'addComment'])->name('comment.add');
+route::post('/deleteComment/{post_id}', [CommentController::class, 'deleteComment'])->name('comment.delete');
 route::get('/showMyComments', [CommentController::class, 'showMyComments'])->name('show.my.comments');
 
 Route::get('/showPostDetails/{id}', [PostController::class, 'showPostDetails'])->name('show.post.details');

@@ -57,7 +57,11 @@ class CommentController extends Controller
         return view('front.myComments.showMyComments', compact('posts', 'user'));
     }
 
-
+public function deleteComment($comment_id){
+        $comment = Comment::findorFail($comment_id)->first();
+        $comment->delete();
+        return redirect()->back();
+}
 
 
 }

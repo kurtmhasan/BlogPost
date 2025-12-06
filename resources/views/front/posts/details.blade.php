@@ -2,33 +2,39 @@
 
 @section('content')
 
-    <!-- Full screen wrapper, card’lar burada ortalanacak -->
-    <div  style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: center;
-            overflow-y: auto; padding: 20px;
-            z-index: 1000; background: rgba(255,255,255,0.9);">
-        <div style="width: 100%; max-width: 600px;">
-            @if(session('success'))
-                <script>
-                    alert("{{ session('success') }}");
-                </script>
-            @endif
-                <div class="card mb-4 shadow-sm rounded-3">
-                <div class="card-header d-flex justify-content-between align-items-center bg-light">
-                    <div>
-                        <a href="{{route('show.profile',  $post->user->id)}}" class="fw-bold text-decoration-none text-dark">
-                            Kullanıcı Adı:{{ $post->user->name }}
-                        </a>
-                    </div>
-                    <small class="text-muted">{{$post->created_at->diffForHumans()}}</small>
-                </div>
-                <div class="card-body">
-                    <p class="text-muted">
-                        {{ $post->content }}
-                    </p>
-                </div>
-                </div>
+    <div class="card mb-4">
+        <a href="{{ route('show.profile', $post->user->id) }}"
+           class="fw-bold fs-5 m-3"
+           style="color: black; text-decoration: none;">
+            {{ $post->user->name }}
+        </a>
 
+        <div class="card h-100">
+
+            {{-- 1. BÖLÜM: RESİM ALANI (Body'nin dışına taşıdık) --}}
+            @if($post->images->count() > 0)
+                <img src="{{ asset('storage/' . $post->images->first()->image_path) }}"
+                     class="card-img-top"
+                     alt="Post Resmi"
+                     style="height: 250px; object-fit: cover; width: 100%;">
+            @else
+                <img src="https://via.placeholder.com/400x250?text=Görsel+Yok"
+                     class="card-img-top"
+                     alt="Varsayılan Resim"
+                     style="height: 250px; object-fit: cover; background-color: #eee;">
+            @endif
+
+            {{-- 2. BÖLÜM: İÇERİK VE ETKİLEŞİM (Body alanı) --}}
+            <div class="card-body d-flex flex-column">
+
+                {{-- İçerik Metni (Esnek alan, butonu aşağı iter) --}}
+                <p class="card-text fw-bold fs-5 mb-4">
+                    {{ $post->content }}
+                </p>
+
+
+            </div>
+        </div>
                 <div style="width:100%; max-width:600px; background:#fff; padding:20px; border-radius:10px; color:#000;">
                     <div class="comment-wrapper">
                         <h3>Yorumlar</h3>

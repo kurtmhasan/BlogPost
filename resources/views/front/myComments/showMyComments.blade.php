@@ -32,6 +32,12 @@
                                     <li class="list-group-item" style="border-bottom: 1px solid #dee2e6;">
                                         {{$comment->user->name}}:
                                         {{ $comment->body }}<br>
+                                        <div class="d-flex gap-2">
+                                            <form action="{{ route('comment.delete',$comment->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-outline-warning">Sil</button>
+                                            </form>
+                                        </div>
                                     </li>
                                 </ul>
                             </div>

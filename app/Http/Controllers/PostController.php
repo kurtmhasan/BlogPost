@@ -13,15 +13,27 @@ class PostController extends Controller
     public function createPost(){
         return view('adminPanel.posts.create');
     }
-    public function addPost(request $request){
-     // dd($request->all);
+    public function addPost(Request $request){
+
         $request->validate([
-        'content'=>'required|max:255|min:3',
-    ]);
+            'content' => 'required|max:255|min:3',
+            'images' => 'array', // Opsiyonel: Gelen veri dizi olmalı
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Her bir dosya için kural
+        ]);
+
     $post = new Post();
     $post->content=$request->content;
     $post->user()->associate(Auth::user());
     $post->save();
+    if($request->hasfile('images')){
+        foreach($request->file('images') as $image){
+            $path = $image->store('images', 'public');
+            $post->images()->create([
+                'image_path' => $path
+            ]);
+        }
+    }
+
         return redirect()->route('show.posts')->with('success', 'postaladın!');
 
     }

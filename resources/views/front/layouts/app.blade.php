@@ -3,7 +3,7 @@
 <html
     lang="en"
     class="layout-menu-fixed layout-compact"
-    data-assets-path="../assets/"
+    data-assets-path="adminPanel/assets/"
     data-template="vertical-menu-template-free">
 <head>
     <meta charset="utf-8" />

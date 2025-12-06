@@ -23,4 +23,9 @@ class Post extends Model
     public function likes(){
         return $this->hasMany(Like::class);
     }
+    public function images()
+    {
+        // Bir postun çok resmi vardır
+        return $this->hasMany(PostImage::class);
+    }
 }

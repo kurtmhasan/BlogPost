@@ -21,6 +21,17 @@
                 @method('DELETE')
                 <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
             </form>
+            @if($post->images->count() > 0)
+                <img src="{{ asset('storage/' . $post->images->first()->image_path) }}"
+                     class="card-img-top"
+                     alt="Post Resmi"
+                     style="height: 250px; object-fit: cover; width: 100%;">
+            @else
+                <img src="https://placehold.co/400x250?text=Gorsel+Yok"
+                     class="card-img-top"
+                     alt="Varsayılan Resim"
+                     style="height: 250px; object-fit: cover; background-color: #eee;">
+            @endif
             <p class="fw-bold fs-5 mb-0">{{ $post->content }}</p>
         </div>
 
