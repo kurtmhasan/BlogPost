@@ -43,6 +43,7 @@
                                     <small class="text-muted">Paylaşıldı: {{ $post->created_at->diffForHumans() }}</small>
                                 </div>
                             @endforeach
+
                         @else
                             <p class="fw-bold fs-5">Dostum Önce bir şeyler paylaş</p>
                             <form action="{{ route('post.create') }}">

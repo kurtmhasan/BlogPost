@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class LikeController extends Controller
 {
     //
-    public function likePost(Request $request, $post_id){
+    public function likePost($post_id){
         $user = Auth::user();
         $exists = Like::where('user_id', $user->id)->where('post_id', $post_id)->exists();
         $post = Post::findOrFail($post_id);

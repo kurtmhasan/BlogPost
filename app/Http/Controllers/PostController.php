@@ -6,9 +6,57 @@ use App\Models\Post;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class PostController extends Controller
 {
+    public function index(Request $request){
+        $posts = Post::with(['user','likes'])
+            ->orderBy('created_at','desc')
+            ->paginate(3);
+
+        $postIds = $posts->pluck('id')->toArray();
+
+        // B. Session'dan daha önce görülmüş postları çek
+        $seenKey = 'seen_posts';
+        $seenPosts = session()->get($seenKey, []);
+
+        // C. Sadece bu oturumda henüz GÖRÜLMEMİŞ olanları filtrele
+        $newIdsToIncrement = array_diff($postIds, $seenPosts);
+
+        // D. Eğer yeni görülen post varsa, TEK SORGU ile güncelle
+        if (!empty($newIdsToIncrement)) {
+            Post::whereIn('id', $newIdsToIncrement)->increment('views');
+
+            // E. Session'ı güncelle (Eskiler + Yeniler)
+            session()->put($seenKey, array_merge($seenPosts, $newIdsToIncrement));
+        }
+        $user=Auth::user();
+        foreach ($posts as $post) {
+            $post->isLiked = $post->likes->contains('user_id', $user->id);
+        }
+
+        if ($request->ajax()) {
+            return view('front.posts.partials.posts', compact('posts'))->render();
+        }
+
+        $news = Cache::remember('tech_news', 3600, function () {
+
+            $apiKey = env('NEWS_API_KEY');
+
+            // API'ye İstek At (Teknoloji kategorisi, İngilizce veya Türkçe)
+            $response = Http::get("https://newsapi.org/v2/top-headlines", [
+                'category' => 'technology',
+                'apiKey' => $apiKey,
+                'pageSize' => 5 // Sadece 5 haber getir
+            ]);
+
+            return $response->json()['articles'] ?? [];
+        });
+
+        return view('front.posts.index', compact('posts','news'));
+    }
 
     public function createPost(){
         return view('adminPanel.posts.create');
@@ -34,25 +82,10 @@ class PostController extends Controller
         }
     }
 
-        return redirect()->route('show.posts')->with('success', 'postaladın!');
+        return redirect()->route('index')->with('success', 'postaladın!');
 
     }
 
-    public function showPosts(Request $request){
-        $posts = Post::with(['user','likes'])
-            ->orderBy('created_at','desc')
-            ->paginate(5);
-        $user=Auth::user();
-        foreach ($posts as $post) {
-            $post->isLiked = $post->likes->contains('user_id', $user->id);
-        }
-
-        if ($request->ajax()) {
-            return view('front.posts.partials.posts', compact('posts'))->render();
-        }
-
-        return view('front.posts.index', compact('posts'));
-    }
     public function showMyPosts(){
         $posts = Auth::user()->posts()->latest()->get();
         return view('front.posts.show',compact('posts'));

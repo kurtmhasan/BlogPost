@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}<br><br>
-                   <a href="{{route('show.posts')}}">Click here to open the app</a>
+                   <a href="{{route('index')}}">Click here to open the app</a>
                 </div>
             </div>
         </div>

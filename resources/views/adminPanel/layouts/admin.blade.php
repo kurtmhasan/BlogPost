@@ -110,7 +110,7 @@
                                     <div class="dropdown-divider"></div>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{route('show.posts')}}">
+                                    <a class="dropdown-item" href="{{route('index')}}">
                                         <i class="bx bx-user me-2"></i>
                                         <span class="align-middle">Uygulamaya git</span>
                                     </a>

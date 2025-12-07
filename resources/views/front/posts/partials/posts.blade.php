@@ -32,15 +32,21 @@
 
                     {{-- Buton Alanı (En alta yapışık ve sağa hizalı) --}}
                     <div class="mt-auto d-flex justify-content-end align-items-center">
-                        <a href="{{ route('like.post', $post->id) }}"
-                           data-url="{{ route('like.post', $post->id) }}"
-                           class="btn like-btn d-flex align-items-center {{ $post->isLiked ? 'btn-danger' : 'btn-outline-danger' }}"
-                           data-id="{{ $post->id }}">
-                            <i class="menu-icon tf-icons bx bx-heart-circle fs-4"></i> {{-- İkon boyutunu düzelttim --}}
+                        <button type="button"
+                                data-url="{{ route('like.post', $post->id) }}"
+                                class="btn like-btn d-flex align-items-center {{ $post->isLiked ? 'btn-danger' : 'btn-outline-danger' }}"
+                                data-id="{{ $post->id }}">
+                            <i class="menu-icon tf-icons bx bx-heart-circle fs-4"></i>
                             <span class="ms-2">Like</span>
-                        </a>
+                        </button>
                     </div>
 
+                </div>
+                <div class="card-footer text-muted d-flex justify-content-between">
+                    <div title="Görüntülenme">
+                        <i class="bx bx-show"></i>
+                       {{$post->views}}
+                    </div>
                 </div>
             </div>
 

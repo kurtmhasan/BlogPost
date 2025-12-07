@@ -89,7 +89,7 @@
         <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 
             <div class="app-brand demo">
-                <a href="{{ route('show.posts') }}" class="app-brand-link">
+                <a href="{{ route('index') }}" class="app-brand-link">
               <span class="app-brand-logo demo">
                 <!-- SVG Logo Kodu... (Kısaltıldı) -->
                 <svg
@@ -177,7 +177,7 @@
             @endif
                 <li class="menu-item">
                     <a
-                        href="{{ route('show.posts') }}"
+                        href="{{ route('index') }}"
                         target="_self"
                         class="menu-link">
                         <i class="menu-icon tf-icons bx bx-home"></i>

@@ -1,33 +1,51 @@
 @extends('front.layouts.app')
-
 @section('content')
 
-    <!-- Full screen wrapper, card’lar burada ortalanacak -->
     <div id="post-wrapper" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; justify-content: center;
         overflow-y: auto; padding: 20px;
         z-index: 1000; background: rgba(255,255,255,0.9);">
 
-        <div style="width: 100%; max-width: 600px;">
+        <div class="container" style="max-width: 1100px;">
 
-            @if(session('success'))
-                <script>
-                    alert("{{ session('success') }}");
-                </script>
-            @endif
+            <div class="row justify-content-center">
 
-            {{-- Postların yükleneceği alan --}}
-            <div id="post-data">
-                @include('front.posts.partials.posts')
-            </div>
+                {{-- 1. SOL/ORTA SÜTUN: POSTLAR (Col-lg-7) --}}
+                <div class="col-lg-7 col-md-10">
 
-            {{-- Yükleniyor göstergesi --}}
-            <div class="text-center my-4" id="loading" style="display: none;">
-                <span>Yükleniyor...</span>
-            </div>
-        </div>
+                    @if(session('success'))
+                        <script>
+                            alert("{{ session('success') }}");
+                        </script>
+                    @endif
 
-    </div>
+                    {{-- Postların yükleneceği alan --}}
+                    <div id="post-data">
+                        @include('front.posts.partials.posts')
+                    </div>
+
+                    {{-- Yükleniyor göstergesi --}}
+                    <div class="text-center my-4" id="loading" style="display: none;">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Yükleniyor...</span>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- 2. SAĞ SÜTUN: HABER WIDGET (Col-lg-4) --}}
+                {{-- d-none d-lg-block: Mobilde gizler, sadece geniş ekranda gösterir --}}
+                <div class="col-lg-4 d-none d-lg-block">
+
+                    {{-- Sticky: Sayfa aşağı kaydırılsa bile haberler sabit kalır --}}
+                    <div style="position: sticky; top: 20px;">
+
+                        {{-- Az önce yazdığımız haber bileşenini buraya dahil ediyoruz --}}
+                        {{-- Dosya adını kendine göre düzenle: örn: front.widgets.news --}}
+                        @include('front.widgets.news-widget')
+
+                    </div>
+                </div>
+
+            </div> </div> </div>
 @endsection
 
 @section('scripts')
@@ -54,7 +72,7 @@
 
             page++;
             $.ajax({
-                url: "{{ route('show.posts') }}?page=" + page,
+                url: "{{ route('index') }}?page=" + page,
                 type: 'get',
                 success: function(response) {
                     if ($.trim(response) === '') {
