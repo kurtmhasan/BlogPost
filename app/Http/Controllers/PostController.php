@@ -8,54 +8,27 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use App\Services\PostService;
+use App\Services\NewsService;
 
 class PostController extends Controller
 {
-    public function index(Request $request){
-        $posts = Post::with(['user','likes'])
-            ->orderBy('created_at','desc')
-            ->paginate(3);
+    public function index(Request $request, PostService $postService, NewsService $newsService)
+    {
+        // A. Postları Servisten Çek
+        // Ayrıca isLiked döngüsüne de gerek kalmadı, servis bunu SQL içinde halletti.
+        $posts = $postService->getLatestPosts(3);
 
-        $postIds = $posts->pluck('id')->toArray();
+        // B. Görüntülenme Sayısını Yönet
+        $postService->handleViewIncrements($posts);
 
-        // B. Session'dan daha önce görülmüş postları çek
-        $seenKey = 'seen_posts';
-        $seenPosts = session()->get($seenKey, []);
-
-        // C. Sadece bu oturumda henüz GÖRÜLMEMİŞ olanları filtrele
-        $newIdsToIncrement = array_diff($postIds, $seenPosts);
-
-        // D. Eğer yeni görülen post varsa, TEK SORGU ile güncelle
-        if (!empty($newIdsToIncrement)) {
-            Post::whereIn('id', $newIdsToIncrement)->increment('views');
-
-            // E. Session'ı güncelle (Eskiler + Yeniler)
-            session()->put($seenKey, array_merge($seenPosts, $newIdsToIncrement));
-        }
-        $user=Auth::user();
-        foreach ($posts as $post) {
-            $post->isLiked = $post->likes->contains('user_id', $user->id);
-        }
-
-        if ($request->ajax()) {
+        if ($request->ajax() && $request->has('load_more')) {
             return view('front.posts.partials.posts', compact('posts'))->render();
         }
 
-        $news = Cache::remember('tech_news', 3600, function () {
+        $news = $newsService->getTechHeadlines();
 
-            $apiKey = env('NEWS_API_KEY');
-
-            // API'ye İstek At (Teknoloji kategorisi, İngilizce veya Türkçe)
-            $response = Http::get("https://newsapi.org/v2/top-headlines", [
-                'category' => 'technology',
-                'apiKey' => $apiKey,
-                'pageSize' => 5 // Sadece 5 haber getir
-            ]);
-
-            return $response->json()['articles'] ?? [];
-        });
-
-        return view('front.posts.index', compact('posts','news'));
+        return view('front.posts.index', compact('posts', 'news'));
     }
 
     public function createPost(){

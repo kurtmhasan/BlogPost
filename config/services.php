@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'news_api' => [
+        'key' => env('NEWS_API_KEY'),
+    ],
 ];

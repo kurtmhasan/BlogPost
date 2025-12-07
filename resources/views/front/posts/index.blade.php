@@ -71,9 +71,15 @@
             $('#loading').show();
 
             page++;
+
             $.ajax({
-                url: "{{ route('index') }}?page=" + page,
+                url: "{{ route('index') }}",
                 type: 'get',
+                data: {
+                    page: page,
+                    load_more: 1     // <--- Controller'daki if($request->has('load_more')) bunu yakalayacak
+                },
+
                 success: function(response) {
                     if ($.trim(response) === '') {
                         hasMore = false;
